@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	a(href="/") Home
+	h1= pain
+	
+	- if (comments != null)
+		each comment in comments
+			hr
+			p.comment= comment.message
+			- date = new Date(comment.timestamp)
+			- timestamp = date.toLocaleString()
+			p.timestamp= timestamp
+			
+	hr
+	
+	form(action='/api/AddComment' method='post' autocomplete="off")
+		input(type="hidden" name="Pain" value="#{pain}")
+		textarea.form-control(name="Comment" placeholder="leave a comment" autofocus rows="7")
+		br
+		input.btn.btn-default(type='submit')

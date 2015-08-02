@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    form(action='/api/AddPain' method='post' autocomplete="off")
+        h1 What is giving you pain?
+        input(type='text' list='pains' name='Pain' class="form-control" placeholder="Example: build times" autofocus)
+        br
+        input.btn.btn-default(type='submit')
+
+    datalist(id="pains")
+        each pain in allPains
+            option(value="#{pain.name}")
+
+    hr
+    
+    h1 Pains
+    table.table.table-striped.table-hover(style="width: 500px")
+        thead
+            tr
+                th Rank
+                th Pain
+                th Score
+        - rank = 1
+        each pain in allPains
+            tr
+                td= rank
+                td
+                    a(href="/comments/#{pain.name}")= pain.name 
+                - number = Math.round(pain.votes)
+                td= number
+            - rank++
