@@ -2,7 +2,7 @@ extends layout
 
 block content
 	a(href="/") Home
-	h1= pain
+	h1 #{topicType}: #{name}
 	
 	- if (comments != null)
 		each comment in comments
@@ -14,8 +14,8 @@ block content
 			
 	hr
 	
-	form(action='/api/AddComment' method='post' autocomplete="off")
-		input(type="hidden" name="Pain" value="#{pain}")
+	form(action='/api/Add#{topicType}Comment' method='post' autocomplete="off")
+		input(type="hidden" name="Name" value="#{name}")
 		textarea.form-control(name="Comment" placeholder="leave a comment" autofocus rows="7")
 		br
-		input.btn.btn-default(type='submit')
+		input.btn.btn-default(type='submit' value="Submit")

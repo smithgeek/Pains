@@ -1,31 +1,76 @@
 extends layout
 
 block content
-    form(action='/api/AddPain' method='post' autocomplete="off")
-        h1 What is giving you pain?
-        input(type='text' list='pains' name='Pain' class="form-control" placeholder="Example: build times" autofocus)
-        br
-        input.btn.btn-default(type='submit')
-
-    datalist(id="pains")
-        each pain in allPains
-            option(value="#{pain.name}")
-
-    hr
-    
-    h1 Pains
-    table.table.table-striped.table-hover(style="width: 500px")
-        thead
-            tr
-                th Rank
-                th Pain
-                th Score
-        - rank = 1
-        each pain in allPains
-            tr
-                td= rank
-                td
-                    a(href="/comments/#{pain.name}")= pain.name 
-                - number = Math.round(pain.votes)
-                td= number
-            - rank++
+    h1(style="text-align: center")= title
+    div(style="display: flex; justify-content: space-around")
+        div
+            form(action='/api/AddPain' method='post' autocomplete="off")
+                h2 What is causing you pain?
+                input(type='text' list='pains' name='Name' class="form-control" placeholder="Example: build times" autofocus)
+                br
+                input.btn.btn-default(type='submit' value='Submit')
+        
+            datalist(id="pains")
+                each pain in allPains
+                    option(value="#{pain.name}")
+        
+            hr
+            
+            h2 Pains
+            table.table.table-striped.table-hover(style="width: 500px")
+                thead
+                    tr
+                        th Rank
+                        th Pain
+                        th Score
+                        th
+                - rank = 1
+                each pain in allPains
+                    tr
+                        td= rank
+                        td
+                            a(href="/PainComments/#{pain.name}")= pain.name 
+                        - number = Math.round(pain.votes)
+                        td= number
+                        td 
+                            form(action='/api/AddPain' method='post')
+                                input(type='hidden' name='Name' value='#{pain.name}')
+                                button(type='submit') &#8679;
+                    - rank++
+                    
+        div
+            form(action='/api/AddLike' method='post' autocomplete="off")
+                h2 What do you like?
+                input(type='text' list='likes' name='Name' class="form-control" placeholder="Example: quick development times")
+                br
+                input.btn.btn-default(type='submit' value='Submit')
+        
+            datalist(id="likes")
+                each like in allLikes
+                    option(value="#{like.name}")
+        
+            hr
+            
+            h2 Likes
+            table.table.table-striped.table-hover(style="width: 500px")
+                thead
+                    tr
+                        th Rank
+                        th Like
+                        th Score
+                        th
+                - rank = 1
+                each like in allLikes
+                    tr
+                        td= rank
+                        td
+                            a(href="/LikeComments/#{like.name}")= like.name 
+                        - number = Math.round(like.votes)
+                        td= number
+                        td 
+                            form(action='/api/AddLike' method='post')
+                                input(type='hidden' name='Name' value='#{like.name}')
+                                button(type='submit') &#8679;
+                    - rank++
+    p(style="font-size: 10px; text-align: center") All data is anonymous and not logged.
+        a(href="https://github.com/smithgeek/Pains") src
